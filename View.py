@@ -43,7 +43,6 @@ class View(Frame):
 
         analyzisBtn = Button(btnHolder, text='Анализировать', bg='#CEC3D4', relief=GROOVE, height=2)
         analyzisBtn.pack(fill=X, side=BOTTOM)
-        analyzisBtn.bind('<Button-2>', start_analysis)
 
         downloadImg = Button(btnHolder, text='Загрузить рентген снимок', fg='white', bg='#7E4160', relief=GROOVE,
                              height=2)

@@ -36,12 +36,16 @@ class mywindow(QtWidgets.QMainWindow):
 
     def open_file_dialog(self):
         fname = QFileDialog.getOpenFileName(self, 'Open file', 'c:\\', "Image files (*.jpg)")
-        self.ui.downloadBtn.clicked.connect(self, vm.input_of_image(fname))
+
+        if len(fname)<3:
+            return
+        else:
+            self.ui.downloadBtn.clicked.connect(self, vm.input_of_image(fname))
 
 
-        """ Placing image in image holder from slot get_image in ViewModel"""
-        pixmap = vm.get_image(self, 417, 586)
-        self.ui.imgHolder.setPixmap(pixmap)
+            """ Placing image in image holder from slot get_image in ViewModel"""
+            pixmap = vm.get_image(self, 417, 586)
+            self.ui.imgHolder.setPixmap(pixmap)
 
 
 

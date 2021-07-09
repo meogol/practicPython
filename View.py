@@ -13,8 +13,8 @@ class mywindow(QtWidgets.QMainWindow):
         super(mywindow, self).__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+        self.vm = ViewModel()
 
-        vm = ViewModel
 
 
         """ Connection of download image button to slot input_of_image in ViewModel"""
@@ -28,24 +28,28 @@ class mywindow(QtWidgets.QMainWindow):
 
 
     def analysis_process(self):
-        vm = ViewModel
-        vm.analysis
+        self.vm.analysis()
         """ Placing image in image holder from slot get_image in ViewModel"""
-        pixmap = vm.get_image(self, 417, 586)
+        pixmap = QPixmap(self.vm.get_image(417, 586))
         self.ui.imgHolder.setPixmap(pixmap)
+        self.ui.imgHolder.resize(417, 586)
+        self.show()
+
 
     def open_file_dialog(self):
-        fname = QFileDialog.getOpenFileName(self, 'Open file', 'c:\\', "Image files (*.jpg)")
+        fname = QFileDialog.getOpenFileName(self, 'Open file', 'c:\\', "Image files (*.jpg)")[0]
 
-        if len(fname)<3:
+        if len(fname)<2:
             return
         else:
-            self.ui.downloadBtn.clicked.connect(self, vm.input_of_image(fname))
+            self.vm.input_of_image(fname)
 
 
             """ Placing image in image holder from slot get_image in ViewModel"""
-            pixmap = vm.get_image(self, 417, 586)
+            pixmap = QPixmap(fname)
             self.ui.imgHolder.setPixmap(pixmap)
+            self.ui.imgHolder.resize(417,586)
+            self.show()
 
 
 

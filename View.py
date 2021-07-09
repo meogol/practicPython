@@ -24,6 +24,9 @@ class mywindow(QtWidgets.QMainWindow):
         """ Connection of start analyze button to slot analysis in ViewModel"""
         self.ui.analyzeBtn.clicked.connect(self.analysis_process)
 
+        self.ui.imgHolder.setStyleSheet("background-color: #D9D9D9")
+
+
 
 
 

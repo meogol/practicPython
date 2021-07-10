@@ -14,7 +14,7 @@ class ViewModel:
 
     """заглушка для кнопки начала анализа"""
     def analysis(self):
-        self.xray = Image.open("Output image.jpg")
+        self.xray = Image.open("Пока похуй, что тут будет, потому что всё-равно не подключени нихуя к нейросети")
         return self.percentage_of_defeat
 
     """возвращение изображения нужного размера"""

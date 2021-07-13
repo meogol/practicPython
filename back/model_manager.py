@@ -3,6 +3,7 @@ import tensorflow as tf
 from PIL import Image
 from tensorflow import keras
 
+
 class AiModel:
     def __init__(self, path):
         self.model = keras.models.load_model(path + 'gosha_model')
@@ -13,7 +14,3 @@ class AiModel:
         res = self.model.predict(tf.expand_dims(image, axis=0))
 
         return np.argmax(res)
-
-
-
-

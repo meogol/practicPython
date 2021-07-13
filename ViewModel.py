@@ -14,7 +14,7 @@ class ViewModel:
     def input_of_image(self, path):
         ds = dicom.dcmread(path)
 
-        self.xray = ds.pixel_array
+        self.xray = Image.fromarray(ds.pixel_array)
 
     """Возвращает результат работы нейросети(0-кот, 1-собака)"""
     def analysis(self):

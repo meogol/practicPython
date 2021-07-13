@@ -1,11 +1,12 @@
-from PIL.ImageQt import ImageQt
-from PyQt5 import QtWidgets, QtCore, QtGui
-from PyQt5.QtWidgets import QFileDialog, QApplication, QWidget, QInputDialog, QLineEdit, QLabel
-from PyQt5.QtGui import QIcon, QPixmap
-from mainview import Ui_MainWindow
-from ViewModel import ViewModel
-from PIL import Image, ImageTk
 import sys
+
+from PIL import Image
+from PyQt5 import QtWidgets, QtGui
+from PyQt5.QtGui import QPixmap
+from PyQt5.QtWidgets import QFileDialog
+
+from ViewModel import ViewModel
+from mainview import Ui_MainWindow
 
 
 class mywindow(QtWidgets.QMainWindow):

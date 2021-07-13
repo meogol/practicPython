@@ -1,12 +1,7 @@
-import PIL
-
 import pydicom
-from PIL import Image, ImageTk
-import pydicom as dicom
-from skimage.exposure import equalize_adapthist
-import back.model_manager as model_manager
+from PIL import Image
 
-from matplotlib import pyplot as plt
+import back.model_manager as model_manager
 
 
 def apply_ct_window(img, window):

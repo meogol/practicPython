@@ -41,16 +41,18 @@ model.compile(optimizer='adam',
               loss='sparse_categorical_crossentropy',
               metrics=['accuracy'])
 
+model.save('gosha_model.h5')
+
 model.fit(ai_manager.train_ds,
           validation_data=ai_manager.test_ds,
           epochs=10)
 
-model.save_weights('model_weights')
-
-print(model.evaluate(ai_manager.validation_ds ))
 
 
-# model.load_weights('model_weights')
+# model.save_weights('model_weights')
+
+model.load_weights('model_weights')
+print(model.evaluate(ai_manager.validation_ds))
 
 # class_names = ai_manager.train_ds.class_names
 # plt.figure(figsize=(10, 10))
@@ -65,40 +67,4 @@ print(model.evaluate(ai_manager.validation_ds ))
 #         plt.axis("off")
 #         plt.show()
 
-# test_img = Image.open(
-#     "C:\\Users\\meogol\\Documents\\git\\python\\practicPython\\back\\test_image\\cat\\203_8p_kbvbgpAE.jpg"
-# )
-#
-# test_img = test_img.resize((256, 256), Image.ANTIALIAS)
-#
-# p = model.predict(tf.expand_dims(test_img, axis=0))
-# print(p)
-#
-# test_img = Image.open(
-#     "C:\\Users\\meogol\\Documents\\git\\python\\practicPython\\back\\test_image\\dog\\003_yZzYZnf1JBo.jpg"
-# )
-#
-# test_img = test_img.resize((256, 256), Image.ANTIALIAS)
-#
-# p = model.predict(tf.expand_dims(test_img, axis=0))
-# print(p)
-#
-#
-# test_img = Image.open(
-#     "C:\\Users\\meogol\\Documents\\git\\python\\practicPython\\back\\test_image\\cat\\115_Rn-3PUNaX3I.jpg"
-# )
-#
-# test_img = test_img.resize((256, 256), Image.ANTIALIAS)
-#
-# p = model.predict(tf.expand_dims(test_img, axis=0))
-# print(p)
-#
-# test_img = Image.open(
-#     "C:\\Users\\meogol\\Documents\\git\\python\\practicPython\\back\\test_image\\dog\\070_B2WOwMT-d2k.jpg"
-# )
-#
-# test_img = test_img.resize((256, 256), Image.ANTIALIAS)
-#
-# p = model.predict(tf.expand_dims(test_img, axis=0))
-# print(p)
 

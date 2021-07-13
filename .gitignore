@@ -133,10 +133,6 @@ back/test_image/
 
 back/save_weights/
 
-back/checkpoint
-
-back/model_weights.data-00000-of-00001
-
-back/model_weights.index
-
 back/save_log
+
+back/gosha_model.h5

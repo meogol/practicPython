@@ -1,9 +1,31 @@
-from PIL import Image, ImageTk
-import numpy as np
+import tensorflow as tf
 
-def read_data(path):
-    arr = np.array
+train_ds = tf.keras.preprocessing.image_dataset_from_directory(
+    'images',
+    validation_split=0.2,
+    subset="training",
+    batch_size=15,
+    shuffle=True,
+    seed=324893,
+    image_size=(256, 256),
+    color_mode='rgb'
+)
 
-    xray = Image.open(path)
-    return ImageTk.PhotoImage(xray.resize((400, 500), Image.ANTIALIAS))
+validation_ds = tf.keras.preprocessing.image_dataset_from_directory(
+    'images',
+    validation_split=0.2,
+    subset="validation",
+    batch_size=15,
+    shuffle=True,
+    seed=324893,
+    image_size=(256, 256),
+    color_mode='rgb'
+)
 
+test_ds = tf.keras.preprocessing.image_dataset_from_directory(
+    'test_image',
+    batch_size=15,
+    image_size=(256, 256),
+    color_mode='rgb',
+
+)

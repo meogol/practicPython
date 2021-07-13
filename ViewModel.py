@@ -13,25 +13,22 @@ class ViewModel:
         self.percentage_of_defeat = 0  # процент поражения лёгких
         self.model = model_manager.AiModel('back\\')
 
-    """заглушка для кнопки загрузки"""
-
     def input_of_image(self, path):
+        """заглушка для кнопки загрузки"""
+
         ds = dicom.dcmread(path)
         img = PIL.Image.fromarray(ds.pixel_array, "I;16")
         self.xray = img
 
-
-
-    """Возвращает результат работы нейросети(0-кот, 1-собака)"""
-
     def analysis(self):
+        """Возвращает результат работы нейросети(0-кот, 1-собака)"""
+
         return self.model.get_result(self.xray)
 
-    """возвращение изображения нужного размера"""
-
     def get_image(self, x, y):
-        return ImageTk.PhotoImage(self.xray.resize((x, y), Image.ANTIALIAS))
+        """возвращение изображения нужного размера"""
 
+        return ImageTk.PhotoImage(self.xray.resize((x, y), Image.ANTIALIAS))
 
 # a = ViewModel()
 # a.input_of_image(
@@ -40,4 +37,3 @@ class ViewModel:
 # img = PIL.Image.fromarray(a.xray, "I;16")
 # plt.imshow(img)
 # plt.show()
-

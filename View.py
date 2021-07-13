@@ -42,14 +42,14 @@ class mywindow(QtWidgets.QMainWindow):
 
         if len(fname) < 2:
             return
-        else:
-            self.vm.input_of_image(fname)
 
-            """ Placing original image in image holder """
-            pixmap = QPixmap(fname)
-            self.ui.imgHolder.setPixmap(pixmap)
-            self.ui.imgHolder.resize(417, 586)
-            self.show()
+        self.vm.input_of_image(fname)
+
+        """ Placing original image in image holder """
+        pixmap = QPixmap(fname)
+        self.ui.imgHolder.setPixmap(pixmap)
+        self.ui.imgHolder.resize(417, 586)
+        self.show()
 
 
 app = QtWidgets.QApplication([])

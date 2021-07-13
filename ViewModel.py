@@ -1,9 +1,20 @@
 import PIL
+
+import pydicom
 from PIL import Image, ImageTk
 import pydicom as dicom
+from skimage.exposure import equalize_adapthist
 import back.model_manager as model_manager
 
 from matplotlib import pyplot as plt
+
+
+def apply_ct_window(img, window):
+    # window = (window width, window level)
+    R = (img - window[1] + 0.5 * window[0]) / window[0]
+    R[R < 0] = 0
+    R[R > 1] = 1
+    return R
 
 
 class ViewModel:
@@ -16,9 +27,15 @@ class ViewModel:
     def input_of_image(self, path):
         """заглушка для кнопки загрузки"""
 
-        ds = dicom.dcmread(path)
-        img = PIL.Image.fromarray(ds.pixel_array, "I;16")
-        self.xray = img
+        ds = pydicom.read_file(path)
+        image = ds.pixel_array
+        image = image.astype(float)
+        image = image * ds.RescaleSlope + ds.RescaleIntercept
+        image = apply_ct_window(image, [400, 50])
+
+        image = Image.fromarray((255 * image).astype('int8'))
+        image = image.convert('RGB')
+        self.xray = image
 
     def analysis(self):
         """Возвращает результат работы нейросети(0-кот, 1-собака)"""
@@ -28,12 +45,4 @@ class ViewModel:
     def get_image(self, x, y):
         """возвращение изображения нужного размера"""
 
-        return ImageTk.PhotoImage(self.xray.resize((x, y), Image.ANTIALIAS))
-
-# a = ViewModel()
-# a.input_of_image(
-#     'C:\\Users\\meogol\\Desktop\\Облако Mail.ru\\razreshenie1\\BOROZDENKOVA_G.V\\19_01_2021_9_09_14\\IMG-0001-00001.dcm')
-#
-# img = PIL.Image.fromarray(a.xray, "I;16")
-# plt.imshow(img)
-# plt.show()
+        return self.xray.resize((x, y), Image.ANTIALIAS)

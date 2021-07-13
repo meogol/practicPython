@@ -1,3 +1,4 @@
+from PIL.ImageQt import ImageQt
 from PyQt5 import QtWidgets, QtCore, QtGui
 from PyQt5.QtWidgets import QFileDialog, QApplication, QWidget, QInputDialog, QLineEdit, QLabel
 from PyQt5.QtGui import QIcon, QPixmap
@@ -18,15 +19,15 @@ class mywindow(QtWidgets.QMainWindow):
         # Связь кнопки загруки изображения (downloadBtn) с методом открытия файлового диалога (open_file_dialog)
         self.ui.downloadBtn.clicked.connect(self.open_file_dialog)
 
-
         # Связь кнопки analyzeBtn и метода analysis_process
         self.ui.analyzeBtn.clicked.connect(self.analysis_process)
 
         # Изменение цвета заднего фона поля изображения
         self.ui.imgHolder.setStyleSheet("background-color: #D9D9D9")
 
-    """ Вызов метода анализа из файла ViewModel, отображение возвращённого изображения из нейросети и текста"""
     def analysis_process(self):
+        """ Вызов метода анализа из файла ViewModel, отображение возвращённого изображения из нейросети и текста"""
+
         # self.vm.analysis()
         # """ Placing image in image holder from slot get_image in ViewModel"""
         # pixmap = QPixmap(self.vm.get_image(417, 586))
@@ -34,22 +35,27 @@ class mywindow(QtWidgets.QMainWindow):
         # self.ui.imgHolder.resize(417, 586)
         # self.show()
 
-
         percent = self.vm.analysis()
         self.ui.textBrowser.setPlainText(str(percent))
         self.show()
 
-    """ Открытие диалогового окна выбора файла, проверка на наличие пути, вывод выбранного изображения на экран """
     def open_file_dialog(self):
+        """ Открытие диалогового окна выбора файла, проверка на наличие пути, вывод выбранного изображения на экран """
+
         fname = QFileDialog.getOpenFileName(self, 'Open file', 'c:\\', "Image files (*.dcm)")[0]
 
         if len(fname) < 2:
             return
 
         self.vm.input_of_image(fname)
+        im = self.vm.xray
+        r, g, b = im.split()
+        im = Image.merge("RGB", (b, g, r))
+        im2 = im.convert("RGBA")
+        data = im2.tobytes("raw", "RGBA")
+        qim = QtGui.QImage(data, im.size[0], im.size[1], QtGui.QImage.Format_ARGB32)
 
-        #Вывод изображения на экран с помощью pixmap
-        pixmap = QPixmap(fname)
+        pixmap = QPixmap().fromImage(qim)
         self.ui.imgHolder.setPixmap(pixmap)
         self.ui.imgHolder.resize(417, 586)
         self.show()

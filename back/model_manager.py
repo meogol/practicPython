@@ -10,6 +10,7 @@ class AiModel:
         self.model.load_weights(path + 'model_weights')
 
     def get_result(self, image):
+        """на вход принимает изображение из vm.xray, возвращает результат работы НС"""
         image = image.resize((256, 256), Image.ANTIALIAS)
         res = self.model.predict(tf.expand_dims(image, axis=0))
 

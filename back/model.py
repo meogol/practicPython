@@ -1,0 +1,104 @@
+import os
+
+import numpy as np
+import tensorflow as tf
+from PIL import Image
+from matplotlib import pyplot as plt
+from matplotlib.pyplot import imshow
+from tensorflow import keras
+from tensorflow.keras import layers
+from tqdm import tqdm
+
+import ai_manager
+
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+
+inputs = keras.Input(shape=(256, 256, 3), name="img")
+
+x = layers.Conv2D(32, 3, activation="relu")(inputs)
+x = layers.Conv2D(64, 3, activation="relu")(x)
+block_1_output = layers.MaxPooling2D(3)(x)
+
+x = layers.Conv2D(64, 3, activation="relu", padding="same")(block_1_output)
+x = layers.Conv2D(64, 3, activation="relu", padding="same")(x)
+block_2_output = layers.add([x, block_1_output])
+
+x = layers.Conv2D(64, 3, activation="relu", padding="same")(block_2_output)
+x = layers.Conv2D(64, 3, activation="relu", padding="same")(x)
+block_3_output = layers.add([x, block_2_output])
+
+x = layers.Conv2D(64, 3, activation="relu")(block_3_output)
+x = layers.GlobalAveragePooling2D()(x)
+
+x = layers.Dense(256, activation="relu")(x)
+x = layers.Dropout(0.5)(x)
+
+outputs = layers.Dense(2, activation='softmax')(x)
+
+model = keras.Model(inputs, outputs, name="toy_resnet")
+
+model.compile(optimizer='adam',
+              loss='sparse_categorical_crossentropy',
+              metrics=['accuracy'])
+
+model.fit(ai_manager.train_ds,
+          validation_data=ai_manager.test_ds,
+          epochs=10)
+
+model.save_weights('model_weights')
+
+print(model.evaluate(ai_manager.validation_ds ))
+
+
+# model.load_weights('model_weights')
+
+# class_names = ai_manager.train_ds.class_names
+# plt.figure(figsize=(10, 10))
+# for images, labels in ai_manager.test_ds.take(1):
+#     for i in range(9):
+#         p = model.predict(tf.expand_dims(images[i], axis=0))
+#         print(np.argmax(p))
+#
+#         ax = plt.subplot(3, 3, i + 1)
+#         plt.imshow(images[i].numpy().astype("uint8"))
+#         plt.title(class_names[labels[i]])
+#         plt.axis("off")
+#         plt.show()
+
+# test_img = Image.open(
+#     "C:\\Users\\meogol\\Documents\\git\\python\\practicPython\\back\\test_image\\cat\\203_8p_kbvbgpAE.jpg"
+# )
+#
+# test_img = test_img.resize((256, 256), Image.ANTIALIAS)
+#
+# p = model.predict(tf.expand_dims(test_img, axis=0))
+# print(p)
+#
+# test_img = Image.open(
+#     "C:\\Users\\meogol\\Documents\\git\\python\\practicPython\\back\\test_image\\dog\\003_yZzYZnf1JBo.jpg"
+# )
+#
+# test_img = test_img.resize((256, 256), Image.ANTIALIAS)
+#
+# p = model.predict(tf.expand_dims(test_img, axis=0))
+# print(p)
+#
+#
+# test_img = Image.open(
+#     "C:\\Users\\meogol\\Documents\\git\\python\\practicPython\\back\\test_image\\cat\\115_Rn-3PUNaX3I.jpg"
+# )
+#
+# test_img = test_img.resize((256, 256), Image.ANTIALIAS)
+#
+# p = model.predict(tf.expand_dims(test_img, axis=0))
+# print(p)
+#
+# test_img = Image.open(
+#     "C:\\Users\\meogol\\Documents\\git\\python\\practicPython\\back\\test_image\\dog\\070_B2WOwMT-d2k.jpg"
+# )
+#
+# test_img = test_img.resize((256, 256), Image.ANTIALIAS)
+#
+# p = model.predict(tf.expand_dims(test_img, axis=0))
+# print(p)
+

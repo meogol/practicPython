@@ -1,3 +1,4 @@
+import PIL
 from PIL import Image, ImageTk
 import pydicom as dicom
 import back.model_manager as model_manager
@@ -16,8 +17,8 @@ class ViewModel:
 
     def input_of_image(self, path):
         ds = dicom.dcmread(path)
-
-        self.xray = ds.pixel_array
+        img = PIL.Image.fromarray(ds.pixel_array, "I;16")
+        self.xray = img
 
 
 
@@ -30,3 +31,13 @@ class ViewModel:
 
     def get_image(self, x, y):
         return ImageTk.PhotoImage(self.xray.resize((x, y), Image.ANTIALIAS))
+
+
+# a = ViewModel()
+# a.input_of_image(
+#     'C:\\Users\\meogol\\Desktop\\Облако Mail.ru\\razreshenie1\\BOROZDENKOVA_G.V\\19_01_2021_9_09_14\\IMG-0001-00001.dcm')
+#
+# img = PIL.Image.fromarray(a.xray, "I;16")
+# plt.imshow(img)
+# plt.show()
+

@@ -4,7 +4,7 @@ from PIL import Image
 from PyQt5 import QtWidgets, QtGui
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QFileDialog
-
+from PyQt5 import QtCore, Qt
 from ViewModel import ViewModel
 from mainview import Ui_MainWindow
 
@@ -57,6 +57,7 @@ class mywindow(QtWidgets.QMainWindow):
         qim = QtGui.QImage(data, im.size[0], im.size[1], QtGui.QImage.Format_ARGB32)
 
         pixmap = QPixmap().fromImage(qim)
+        pixmap = pixmap.scaled(417,586, QtCore.Qt.KeepAspectRatio)
         self.ui.imgHolder.setPixmap(pixmap)
         self.ui.imgHolder.resize(417, 586)
         self.show()

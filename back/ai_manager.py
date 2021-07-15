@@ -1,7 +1,7 @@
 import tensorflow as tf
 
 train_ds = tf.keras.preprocessing.image_dataset_from_directory(
-    'images',
+    'data\\train',
     validation_split=0.2,
     subset="training",
     batch_size=15,
@@ -12,7 +12,7 @@ train_ds = tf.keras.preprocessing.image_dataset_from_directory(
 )
 
 validation_ds = tf.keras.preprocessing.image_dataset_from_directory(
-    'images',
+    'data\\validation',
     validation_split=0.2,
     subset="validation",
     batch_size=15,
@@ -23,7 +23,7 @@ validation_ds = tf.keras.preprocessing.image_dataset_from_directory(
 )
 
 test_ds = tf.keras.preprocessing.image_dataset_from_directory(
-    'test_image',
+    'data\\test',
     batch_size=15,
     image_size=(256, 256),
     color_mode='rgb',

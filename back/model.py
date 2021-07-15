@@ -25,7 +25,7 @@ x = layers.Conv2D(64, 3, activation="relu")(block_3_output)
 x = layers.GlobalAveragePooling2D()(x)
 
 x = layers.Dense(256, activation="relu")(x)
-x = layers.Dropout(0.5)(x)
+x = layers.Dense(256, activation="relu")(x)
 
 outputs = layers.Dense(2, activation='softmax')(x)
 
@@ -35,18 +35,17 @@ model.compile(optimizer='adam',
               loss='sparse_categorical_crossentropy',
               metrics=['accuracy'])
 
-model.save('gosha_model.h5')
 
 model.fit(ai_manager.train_ds,
-          validation_data=ai_manager.test_ds,
-          epochs=10)
+          validation_data=ai_manager.validation_ds,
+          epochs=3)
 
+model.save('gosha_model')
 
+model.save_weights('model_weights')
 
-# model.save_weights('model_weights')
-
-model.load_weights('model_weights')
-print(model.evaluate(ai_manager.validation_ds))
+#model.load_weights('model_weights')
+print(model.evaluate(ai_manager.test_ds))
 
 # class_names = ai_manager.train_ds.class_names
 # plt.figure(figsize=(10, 10))
@@ -60,5 +59,3 @@ print(model.evaluate(ai_manager.validation_ds))
 #         plt.title(class_names[labels[i]])
 #         plt.axis("off")
 #         plt.show()
-
-

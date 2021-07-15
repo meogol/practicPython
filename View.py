@@ -43,7 +43,7 @@ class mywindow(QtWidgets.QMainWindow):
     def open_file_dialog(self):
         """ Открытие диалогового окна выбора файла, проверка на наличие пути, вывод выбранного изображения на экран """
 
-        fname = QFileDialog.getOpenFileName(self, 'Open file', 'c:\\', "Image files (*.dcm)")[0]
+        fname = QFileDialog.getOpenFileName(self, 'Open file', '.\\', "Image files (*.dcm)")[0]
 
         if len(fname) < 2:
             return

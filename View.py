@@ -36,9 +36,14 @@ class mywindow(QtWidgets.QMainWindow):
         # self.ui.imgHolder.resize(417, 586)
         # self.show()
 
-        percent = self.vm.analysis()
-        self.ui.textBrowser.setPlainText(str(percent))
-        self.show()
+        status = self.vm.analysis()
+        if status == 1:
+
+            self.ui.textBrowser.setPlainText("Больные лёгкие")
+            self.show()
+        else:
+            self.ui.textBrowser.setPlainText("Лёгкие здоровы")
+            self.show()
 
     def open_file_dialog(self):
         """ Открытие диалогового окна выбора файла, проверка на наличие пути, вывод выбранного изображения на экран """
